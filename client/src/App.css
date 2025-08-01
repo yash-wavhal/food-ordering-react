@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #root{
   --border-white: rgb(232, 232, 232);
   --zomato-red: rgb(255, 181, 44);
