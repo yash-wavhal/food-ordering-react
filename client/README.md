@@ -15,7 +15,7 @@
 * **HTML:** A language that provides the structure of every page.
 * **CSS:** A StyleSheet page for every page designed beautifully.
 * **React:** A powerful JavaScript library for building user interfaces.
-* **Redux:** A state management library that helps keep your app organized and predictable.
+* **Redux:** A state management library that helps keep your app organized.
 
 
 **Get started in no time:**
