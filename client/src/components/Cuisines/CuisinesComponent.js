@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import Slider from "react-slick";
 import NextArrow from "../Carousal/nextArrow";
 import PrevArrow from "../Carousal/prevArrow";
+import axios from "../../utils/axios";
 
 const ParticularCuisines = () => {
   const [currentItem, setCurrentItem] = useState(null);
@@ -17,31 +18,24 @@ const ParticularCuisines = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        // Fetch selected item by ID
-        const res = await fetch(`http://localhost:8080/api/fooditems/fooditem/${val}`);
-        if (!res.ok) throw new Error("Item not found");
-        const data = await res.json();
-        setCurrentItem(data);
+  const fetchItem = async () => {
+    try {
+      const res = await axios.get(`/fooditems/fooditem/${val}`);
+      const data = res.data;
+      setCurrentItem(data);
 
-        // Fetch similar items by food type
-        const resSimilar = await fetch(
-          `http://localhost:8080/api/fooditems/foodtype/${data.foodtype}`
-        );
-        if (resSimilar.ok) {
-          const similarData = await resSimilar.json();
-          // Exclude current item from similar list
-          setSimilarItems(similarData.filter((item) => item.id !== data.id));
-        }
-      } catch (err) {
-        console.error(err);
-        toast.error(err.message);
-      }
-    };
+      const resSimilar = await axios.get(`/fooditems/foodtype/${data.foodtype}`);
+      const similarData = resSimilar.data;
 
-    fetchItem();
-  }, [val]);
+      setSimilarItems(similarData.filter((item) => item.id !== data.id));
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
+
+  fetchItem();
+}, [val]);
 
   const addToCart = (item) => {
     dispatch(AddCart(item));
