@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "../utils/axios"; // Your axios instance with baseURL and credentials
 import { useNavigate } from "react-router-dom";
+import api from "../utils/axios"; // Your axios instance with baseURL and credentials
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Login = () => {
         }
 
         try {
-            const res = await axios.post("/auth/login", { email, password });
+            const res = await api.post("/auth/login", { email, password });
             toast.success("Login successful!");
             navigate("/");
 

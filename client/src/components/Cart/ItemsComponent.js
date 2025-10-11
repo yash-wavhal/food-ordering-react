@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import Slider from "react-slick";
 import NextArrow from "../Carousal/nextArrow";
 import PrevArrow from "../Carousal/prevArrow";
-import axios from "../../utils/axios";
+import api from "../../utils/axios";
 
 const ParticularItem = () => {
   const [currentItem, setCurrentItem] = useState(null);
@@ -21,12 +21,12 @@ const ParticularItem = () => {
   useEffect(() => {
   const fetchItem = async () => {
     try {
-      const res = await axios.get(`/fooditems/fooditem/${val}`);
+      const res = await api.get(`/fooditems/fooditem/${val}`);
       const data = res.data;
       setCurrentItem(data);
       console.log("currentItem", data);
 
-      const resSimilar = await axios.get(`/fooditems/foodtype/${data.foodtype}`);
+      const resSimilar = await api.get(`/fooditems/foodtype/${data.foodtype}`);
       const similarData = resSimilar.data;
       setSimilarItems(similarData.filter((item) => item.id !== data.id));
     } catch (err) {
