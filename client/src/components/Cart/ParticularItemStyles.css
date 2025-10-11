@@ -2,35 +2,51 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    margin-top: 50px;
+    margin-left: 200px;
+    gap: 30px;
 }
+
 .true-container{
     width: 50%;
 }
+
 .detail-container-1 h5{
-    font-weight: 500;
-}
-.img-food-true{
-    margin: 50px 0px 0px 125px;
-    width: 30%;
-    object-fit: cover;
-    border-radius: 10px;
+    font-weight: 600;
+    color: #333;
 }
 
-.img{
-    object-fit: cover;
-    border-radius: 10px;
-    height: 40vh;
+.img-food-true{
+    width: 40%;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    padding: 15px;
+    background-color: #fff;
 }
-.img-desc p{
-    font-size: 14px;
-    font-weight: 500;
-    text-align: left;
-}
-.img-desc p span{
+
+.img-desc p span {
     font-weight: bolder;
-    font-size: 24px;
+    font-size: 18px;
+    color: #222;
 }
+
+.img-desc p {
+    margin: 6px 0;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.img-desc p:nth-child(n+11) { 
+    font-style: italic;
+    color: #555;
+}
+
+.img-desc p:last-child, 
+.img-desc p:nth-last-child(2) {
+    font-size: 13px;
+    color: #888;
+}
+
 .detail-container{
     padding: 12px 0px 0px 0px;
     border-radius: 10px;
@@ -38,6 +54,10 @@
     height: 20vh;
     border: 1px solid var(--filter-text); 
     text-align: center;
+}
+.detail-container h1{
+    font-size: x-large;
+    font-weight: 600;
 }
 .detail-container-1{
     font-size: 25px;
@@ -53,6 +73,7 @@
     padding: 1px;
     border: 1px solid black;
     font-size: 18px;
+    margin-top: 5px;
     float: right;
     width: 18%;
     border-radius: 5px;
@@ -99,4 +120,50 @@
 }
 .main-btn:hover{
     cursor: pointer;
+}
+
+.delivery-item-cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.delivery-item-cover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.delivery-item-image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.delivery-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
+    line-height: 1.2;
+}
+
+.slick-slide {
+    display: flex !important;
+    justify-content: center;
+}
+
+.slick-track {
+    display: flex;
+    gap: 20px;
 }

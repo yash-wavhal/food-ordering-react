@@ -1,26 +1,43 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import "../exploreSection/ExploreSectionStyles.css";
-import { restaurant } from "../Lists";
-import { useRecoilValue } from "recoil";
-import {
-  setAtomCheckBox,
-  setAtomPrice,
-  setAtomRating,
-  setAtomTime,
-} from "../Filters/filterItems/filtertab/PopElement";
 import { Link } from "react-router-dom";
 
 const ExploreSection = () => {
-
   const [search, setSearch] = useState("");
-  const exploreItem = restaurant.filter((item) => search.toLowerCase() === ""? item
-        : item.name.toLowerCase().includes(search));
+  const [foodItems, setFoodItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit] = useState(12);
 
-  
-  const coilPrice = useRecoilValue(setAtomPrice);
-  const coilRating = useRecoilValue(setAtomRating);
-  const coilTime = useRecoilValue(setAtomTime);
-  const coilCheckbox = useRecoilValue(setAtomCheckBox);
+  const fetchFoodItems = async (pageNumber = 1) => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/fooditems?page=${pageNumber}&limit=${limit}`
+      );
+      const data = await res.json();
+      setFoodItems(data.items);
+      setTotalPages(data.totalPages);
+      setPage(data.page);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchFoodItems(page);
+  }, [page]);
+
+  const handleNext = () => {
+    if (page < totalPages) setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const filteredItems = foodItems.filter((restaurant) =>
+    restaurant.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="max-width explore-section">
@@ -37,322 +54,46 @@ const ExploreSection = () => {
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
         </div>
+
         <div className="explore-grid">
-          {exploreItem.map((restaurant) => {
-              return (
-                <div className="res-row" key={restaurant.id}>
-                  {coilCheckbox.indexOf(true, 0) === -1 &&
-                  restaurant.rating <= coilRating &&
-                  restaurant.price <= coilPrice &&
-                  restaurant.deliveryTime <= coilTime ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-
-                      {restaurant.foodType}
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 0 &&
-                      restaurant.foodType.startsWith("South") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 1 &&
-                      restaurant.foodType.startsWith("Rajasthani") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 2 &&
-                      restaurant.foodType.startsWith("American") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 3 &&
-                      restaurant.foodType.startsWith("Indian") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 4 &&
-                      restaurant.foodType.startsWith("Italian") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : "" ||
-                    (coilCheckbox.indexOf(true, 0) === 5 &&
-                      restaurant.foodType.startsWith("Chinese") &&
-                      restaurant.rating <= coilRating &&
-                      restaurant.price <= coilPrice &&
-                      restaurant.deliveryTime <= coilTime) ? (
-                    <div>
-                      <div className="explore-card-cover">
-                        <Link to={`/item/${restaurant.id}`}>
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="explore-card-image"
-                          />
-                        </Link>
-                        {restaurant.deliveryTime <= coilTime ? (
-                          <div className="delivery-time">
-                            {restaurant.deliveryTime + "min"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="res-name">{restaurant.name}</div>
-                      {restaurant.foodType}
-
-                      <div className="pir-rat">
-                        {restaurant.price <= coilPrice ? (
-                          <div className="approx-price">
-                            {restaurant.price + "₹"}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {restaurant.rating <= coilRating ? (
-                          <div className="res-rating absolute-center">
-                            {restaurant.rating}
-                            <i className="fi fi-rr-star absolute-center"></i>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+          {filteredItems.map((restaurant) => (
+            <div className="res-row" key={restaurant.id}>
+              <div className="explore-card-cover">
+                <Link to={`/item/${restaurant.id}`}>
+                  <img
+                    src={restaurant.image}
+                    alt={restaurant.name}
+                    className="explore-card-image"
+                  />
+                </Link>
+                <div className="delivery-time">
+                  {restaurant.deliveryTime + "min"}
                 </div>
-              );
-          })}
+              </div>
+              <div className="res-name">{restaurant.name}</div>
+              <div className="res-foodType">{restaurant.foodType}</div>
+              <div className="pir-rat">
+                <div className="approx-price">{restaurant.price}₹</div>
+                <div className="res-rating absolute-center">
+                  {restaurant.rating}
+                  <i className="fi fi-rr-star absolute-center"></i>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination Buttons */}
+        <div className="btn-container">
+          <button className="prev-btn" onClick={handlePrev} disabled={page === 1}>
+            Previous
+          </button>
+          <span>
+            {page} / {totalPages}
+          </span>
+          <button className="next-btn" onClick={handleNext} disabled={page === totalPages}>
+            Next
+          </button>
         </div>
       </div>
     </div>

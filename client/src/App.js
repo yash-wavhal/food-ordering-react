@@ -7,12 +7,14 @@ import Cart from './routes/Cart';
 import Orders from './routes/Orders';
 import Account from './routes/Account';
 import LastPage from './routes/LastPage';
-import ParticularItem from './components/Cart/ParticularItem';
+import ParticularItem from './routes/ParticularItem';
 import { Provider } from 'react-redux';
 import store from './components/store';
 import { Toaster } from 'react-hot-toast';
 import { getTotals } from './components/redux/ShoppingCart';
-import ParticularCuisines from './components/Cart/ParticularCuisines';
+import ParticularCuisines from './routes/ParticularCuisines';
+import Login from './routes/Login';
+import Register from './routes/Register';
 
 function App() {
 
@@ -22,10 +24,12 @@ function App() {
      <Provider store={store}>
         <Routes>
           <Route path="/" element={<Home />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
           <Route path="/menu" element={<Menu />}/>
           <Route path="/cart" element={<Cart />}/>
           <Route path="/orders" element={<Orders />}/>
-          <Route path="/account" element={<Account/>}/>
+          <Route path="/profile" element={<Account/>}/>
           <Route path="/item/:id" element={<ParticularItem/>}/>
           <Route path="/foodtype/:id" element={<ParticularCuisines/>}/>
           <Route path="/confirm" element={<LastPage/>} />

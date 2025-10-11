@@ -1,6 +1,5 @@
 import React from 'react';
 import '../Delivery/DeliveryStyles.css';
-import Filter from '../Filters/Filter';
 import ExploreSection from '../exploreSection/ExploreSection';
 
 export const DeliveryFilters = [
@@ -13,9 +12,6 @@ export const DeliveryFilters = [
 const Delivery = () => {
   return (
     <div>
-      <div className='max-width'>
-        <Filter filterList={DeliveryFilters} />
-      </div>
       <ExploreSection  />
     </div>
   )

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import Navbar from '../components/header/Navbar';
-import TabOption from '../components/tabOption';
-import Delivery from '../components/Delivery/Delivery';
-import DinnigOut from '../components/DinningOut/DinnigOut';
-import NIghtLife from '../components/NightLife/NIghtLife';
+import React, { useState } from "react";
+import Navbar from "../components/header/Navbar";
+import Delivery from "../components/Delivery/Delivery";
+import "../components/Styles/commonClass.css";
+import MenuComponent from "../components/Menu/MenuComponent";
 
 const Menu = () => {
   const [activeTab, setActiveTab] = useState("Delivery");
@@ -11,23 +10,11 @@ const Menu = () => {
   return (
     <div>
       <Navbar />
-      <TabOption  activeTab={activeTab}  setActiveTab={setActiveTab}/>
-      {getCorrectScreen(activeTab)}
-    </div>
-  )
-};
+      <MenuComponent activeTab={activeTab} setActiveTab={setActiveTab} />
 
-const getCorrectScreen = (tab) =>{
-  switch(tab){
-    case "Delivery":
-      return <Delivery />
-    case "DinningOut":
-      return <DinnigOut />
-    case "NightLife":
-      return <NIghtLife />
-    default:
-      return <Delivery />
-  }
+      {activeTab === "Delivery" && <Delivery />}
+    </div>
+  );
 };
 
 export default Menu;

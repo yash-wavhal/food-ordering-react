@@ -125,3 +125,41 @@
     background-color: var(--primary-bg);
     border: 1px solid black;
 }
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 56px;
+}
+
+.prev-btn,
+.next-btn {
+    background-color: #e44242;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background-color: #c61e2c;
+}
+
+.prev-btn:disabled,
+.next-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.page-indicator {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
