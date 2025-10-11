@@ -14,7 +14,7 @@
 **Built with**
 * **HTML:** A language that provides the structure of every page.
 * **CSS:** A StyleSheet page for every page designed beautifully.
-* **React:** A powerful JavaScript library for building dynamic user interfaces.
+* **React:** A powerful JavaScript library for building user interfaces.
 * **Redux:** A state management library that helps keep your app organized and predictable.
 
 
