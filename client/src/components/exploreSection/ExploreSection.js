@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../exploreSection/ExploreSectionStyles.css";
 import { Link } from "react-router-dom";
+import api from "../../utils/axios";
 
 const ExploreSection = () => {
   const [search, setSearch] = useState("");
@@ -11,10 +12,8 @@ const ExploreSection = () => {
 
   const fetchFoodItems = async (pageNumber = 1) => {
     try {
-      const res = await fetch(
-        `http://localhost:8080/api/fooditems?page=${pageNumber}&limit=${limit}`
-      );
-      const data = await res.json();
+      const res = await api.get(`/fooditems?page=${pageNumber}&limit=${limit}`);
+      const data = res.data;
       setFoodItems(data.items);
       setTotalPages(data.totalPages);
       setPage(data.page);
