@@ -16,7 +16,6 @@ import ParticularCuisines from './routes/ParticularCuisines';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import PublicRoute from './components/PublicRoute/publicRoute';
 
 function App() {
 
