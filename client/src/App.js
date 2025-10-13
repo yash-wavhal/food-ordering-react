@@ -16,6 +16,7 @@ import ParticularCuisines from './routes/ParticularCuisines';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import PublicRoute from './components/PublicRoute/publicRoute';
 
 function App() {
 
@@ -24,8 +25,8 @@ function App() {
      <div className='App'>
      <Provider store={store}>
         <Routes>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/register" element={<Register />}/>
+          <Route path="/login" element={<ProtectedRoute><Login /></ProtectedRoute>} />
+          <Route path="/register" element={<ProtectedRoute><Register /></ProtectedRoute>} />
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
           <Route path="/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>}/>
           <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>}/>
