@@ -15,6 +15,7 @@ import { getTotals } from './components/redux/ShoppingCart';
 import ParticularCuisines from './routes/ParticularCuisines';
 import Login from './routes/Login';
 import Register from './routes/Register';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
 
@@ -23,16 +24,16 @@ function App() {
      <div className='App'>
      <Provider store={store}>
         <Routes>
-          <Route path="/" element={<Home />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/menu" element={<Menu />}/>
-          <Route path="/cart" element={<Cart />}/>
-          <Route path="/orders" element={<Orders />}/>
-          <Route path="/profile" element={<Account/>}/>
-          <Route path="/item/:id" element={<ParticularItem/>}/>
-          <Route path="/foodtype/:id" element={<ParticularCuisines/>}/>
-          <Route path="/confirm" element={<LastPage/>} />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+          <Route path="/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>}/>
+          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>}/>
+          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>}/>
+          <Route path="/profile" element={<ProtectedRoute><Account/></ProtectedRoute>}/>
+          <Route path="/item/:id" element={<ProtectedRoute><ParticularItem/></ProtectedRoute>}/>
+          <Route path="/foodtype/:id" element={<ProtectedRoute><ParticularCuisines/></ProtectedRoute>}/>
+          <Route path="/confirm" element={<ProtectedRoute><LastPage/></ProtectedRoute>} />
         </Routes>
         <Toaster position='top-right'/>
       </Provider>

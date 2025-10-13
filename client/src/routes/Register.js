@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../utils/axios";
 
 const Register = () => {
@@ -73,6 +73,13 @@ const Register = () => {
           >
             {loading ? "Registering..." : "Register"}
           </button>
+          <div className="text-center mt-4">
+            <p className="text-gray-600">Already have an account?{" "}
+            <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
+              Log In
+            </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>

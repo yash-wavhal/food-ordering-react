@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../utils/axios"; // Your axios instance with baseURL and credentials
+import { useDispatch } from "react-redux";
+import { login } from "../components/redux/authSlice";
 
 const Login = () => {
     const [email, setEmail] = useState("");
+    const dispatch = useDispatch();
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -22,7 +25,8 @@ const Login = () => {
         try {
             const res = await api.post("/auth/login", { email, password });
             toast.success("Login successful!");
-            navigate("/");
+            dispatch(login(res.data.user));
+            navigate("/menu");
 
         } catch (err) {
             toast.error(err.response?.data?.error || "Login failed");
@@ -75,6 +79,11 @@ const Login = () => {
                 >
                     {loading ? "Logging in..." : "Login"}
                 </button>
+                <div className="text-center mt-4">
+                    <p className="text-gray-600">Don't have an account?
+                        <Link to="/register" className="text-indigo-600 font-semibold hover:underline"> Sign Up</Link>
+                    </p>
+                </div>
             </form>
         </div>
     );

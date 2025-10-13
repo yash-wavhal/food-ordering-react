@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/header/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { removeWishlist } from "../components/redux/ShoppingCart";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import api from "../utils/axios";
 
 const Account = () => {
   const { wish } = useSelector((item) => item.user);
   const { quantity, amount } = useSelector((carts) => carts.user);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/auth/me");
+        setName(res.data.user.name);
+      } catch (err) {
+        if (err.response?.status === 401) {
+          console.warn("Unauthorized. User is not logged in.");
+        } else {
+          console.error("An unexpected error occurred:", err);
+        }
+      }
+    };
+    fetchUser();
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -22,7 +40,7 @@ const Account = () => {
         <div className="pp-top">
             <div className="profile-color">
               <i className="fa-solid fa-user fa-2x"></i>
-              <p className="item">Name</p>
+              <p className="item">Welcome, {name}</p>
             </div>
             <div className="item">
               <span>Order: {quantity}</span>

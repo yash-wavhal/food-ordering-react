@@ -14,10 +14,7 @@ const Orders = () => {
   const { amount } = useSelector((carts) => carts.user);
 
   const dispatch = useDispatch();
-
-
   
-
   const navigate = useNavigate();
   const handleBack = () => {
     navigate("/cart");
@@ -27,8 +24,6 @@ const Orders = () => {
   const handleClear = () => {
     dispatch(clearCart());
   };
-
-  
 
   const handleCheck = () =>{
     if(cart.length === 0){
@@ -104,7 +99,7 @@ const Orders = () => {
                 <input type="radio" className="radio-btn" value="1" name="2"/><label className="label">UPI Payment</label>
             </div>
             <div className="payment">
-                <h2 className="text">Your Adress</h2>
+                <h2 className="text">Your Address</h2>
                 <input type="text" className="input-btn" placeholder="Enter Address..."/>
                 <input type="submit" className="btn-1"/>
                 
