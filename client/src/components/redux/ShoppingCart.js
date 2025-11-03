@@ -60,6 +60,7 @@ const ShoppingCart = createSlice({
         clearCart(state, action){
             state.cart = []
             state.amount = 0;
+            state.quantity = 0;
             // toast.success("Cart Is Empty!")
         },
         getTotals(state, action){

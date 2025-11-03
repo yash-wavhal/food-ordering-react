@@ -14,6 +14,7 @@ const ExploreSection = () => {
     try {
       const res = await api.get(`/fooditems?page=${pageNumber}&limit=${limit}`);
       const data = res.data;
+      console.log("data", data);
       setFoodItems(data.items);
       setTotalPages(data.totalPages);
       setPage(data.page);
@@ -66,7 +67,7 @@ const ExploreSection = () => {
                   />
                 </Link>
                 <div className="delivery-time">
-                  {restaurant.deliveryTime + "min"}
+                  {restaurant.deliverytime + "min"}
                 </div>
               </div>
               <div className="res-name">{restaurant.name}</div>

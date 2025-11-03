@@ -14,7 +14,7 @@ const Account = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/auth/me");
+        const res = await api.get("/users/me");
         setName(res.data.user.name);
       } catch (err) {
         if (err.response?.status === 401) {

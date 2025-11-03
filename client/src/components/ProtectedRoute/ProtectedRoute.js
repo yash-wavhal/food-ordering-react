@@ -9,21 +9,22 @@ const ProtectedRoute = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const publicPaths = ["/", "/login", "/register"];
+  const publicPaths1 = ["/login", "/register"];
+  const publicPaths2 = ["/orders", "/profile", "/confirm"];
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/auth/me");
+        const res = await api.get("/users/me");
         dispatch(login(res.data.user));
-        if (publicPaths.includes(location.pathname)) {
+        if (publicPaths1.includes(location.pathname)) {
           navigate("/");
         }
       } catch (err) {
         if (err.response?.status === 401) {
           console.warn("Unauthorized. User is not logged in.");
           dispatch(logout());
-          if (!publicPaths.includes(location.pathname)) {
+          if (publicPaths2.includes(location.pathname)) {
             navigate("/login");
           }
         } else {
